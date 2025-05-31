@@ -3,13 +3,19 @@ from flask_jwt_extended import jwt_required
 from app import db
 from app.models import Task
 
+# Blueprint for task-related routes
 task_bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
 @task_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_tasks():
     tasks = Task.query.all()
-    return jsonify([{'id': t.id, 'title': t.title, 'description': t.description, 'completed': t.completed} for t in tasks])
+    return jsonify([{
+        'id': t.id,
+        'title': t.title,
+        'description': t.description,
+        'completed': t.completed
+    } for t in tasks])
 
 @task_bp.route('/', methods=['POST'])
 @jwt_required()
@@ -19,3 +25,10 @@ def add_task():
     db.session.add(task)
     db.session.commit()
     return jsonify(message="Task created"), 201
+
+# Blueprint for main/root route
+main = Blueprint('main', __name__)
+
+@main.route('/')
+def home():
+    return "Flask Task Manager API is running."
