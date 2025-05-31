@@ -10,7 +10,7 @@ jwt = JWTManager()
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
-    app.config['JWT_SECRET_KEY'] = 'your-secret-key'
+    app.config['JWT_SECRET_KEY'] = 'S3cureJWTKey_2025!FlaskAuth'
 
     db.init_app(app)
     migrate.init_app(app, db)
